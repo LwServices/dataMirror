@@ -1,0 +1,37 @@
+dataMirror v0.1
+
+Why? Modx Revo saves Chunks, Templates, Resources, Snippets in the Database.
+This is a great feature but at this point you get a problem when you used
+to use a IDE like Coda, Dreamweaver ...
+
+This Plugin solves this Problem.
+
+Install:
+
+Create Directories:
+
+cd <base_path>
+mkdir assets/mirror/resources
+mkdir assets/mirror/chunks
+mkdir assets/mirror/snippets
+mkdir assets/mirror/templates
+
+Install Plugin:
+- download datamirrow-0.1-beta1.transport.zip and move to core/packages 
+- go to Package Management
+- add new package
+- search Localy
+- install package
+
+Use:
+go to modx manager edit something (chunk for example) and save.
+after you saved it you should see a file in assets/mirror/chunks
+for <id>-<name>.html (example 15-myChunk.html)
+
+now edit it in your editor the file.
+you save
+you refresh the page (this will be copy the file to database)
+
+
+Production:
+you should remove all mirror files and deactivate this plugin.
