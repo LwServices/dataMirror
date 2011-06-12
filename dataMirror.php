@@ -23,13 +23,16 @@ switch($eventName) {
 
       foreach($dirArray as $myCurrent){
         $chunk_id=(int)preg_replace('/-.*html/','',$myCurrent);
-        if($chunk_id){
+        echo $chunk_id.',<br/>';
+	if($chunk_id){
           $fileandpath=$myRootPath.$myCurrent;
           $content=file_get_contents($fileandpath);
           $myChunk=$modx->getObject('modChunk',$chunk_id);
-          $myChunk->setContent($content);
-          $myChunk->save();
-        }
+	  if($myChunk){
+          	$myChunk->setContent($content);
+          	$myChunk->save();
+	  };
+        };
       };
     //restore Resources
       $myRootPath=$modx->getOption('assets_path')."mirror/resources/";
@@ -41,9 +44,11 @@ switch($eventName) {
           $fileandpath=$myRootPath.$myCurrent;
           $content=file_get_contents($fileandpath);
           $myRes=$modx->getObject('modResource',$resId);
-          $myRes->setContent($content);
-          $myRes->save();
-        }
+	  if($myRes){
+          	$myRes->setContent($content);
+          	$myRes->save();
+	  };
+        };
       };
 
     //restore Snippets
@@ -56,9 +61,11 @@ switch($eventName) {
           $fileandpath=$myRootPath.$myCurrent;
           $content=file_get_contents($fileandpath);
           $mySnip=$modx->getObject('modSnippet',$snipId);
-          $mySnip->setContent($content);
-          $mySnip->save();
-        }
+          if($mySnip){
+	  	$mySnip->setContent($content);
+          	$mySnip->save();
+	  };  
+        };
       };    
 
     //restore Templates
@@ -71,11 +78,13 @@ switch($eventName) {
           $fileandpath=$myRootPath.$myCurrent;
           $content=file_get_contents($fileandpath);
           $myTemp=$modx->getObject('modTemplate',$tempId);
-          $myTemp->setContent($content);
-          $myTemp->save();
-        }
+          if($myTemp){
+	  	$myTemp->setContent($content);
+          	$myTemp->save();
+	  };
+        };
       };   
-    
+
       break;
     
     case 'OnChunkFormSave':    
@@ -100,7 +109,7 @@ switch($eventName) {
       $myRes=$modx->event->params['resource'];
       $myContent=$myRes->getContent();
       $resFileName=$modx->getOption('assets_path')."mirror/resources/"
-        .$resId."-".$myRes->get('pagetitle').".html";
+        .$resId.".html";//$myRes->get('pagetitle')
       file_put_contents($resFileName,$myContent);
       @chmod($resFileName, 0664);    
       break;
@@ -136,3 +145,4 @@ switch($eventName) {
   default:
       break;
 }
+  
